@@ -5,7 +5,7 @@ function theta = sample_dirichlet(alpha, N)
 
 % We use the method from p. 482 of "Bayesian Data Analysis", Gelman et al.
 
-assert(alpha > 0);
+assert(all(alpha(:) > 0));
 k = length(alpha);
 theta = zeros(N, k);
 scale = 1; % arbitrary

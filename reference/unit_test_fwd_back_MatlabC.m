@@ -16,7 +16,7 @@ E = normalize(exp(logSmoothedSequence),1);
 % introduce. I don't know what it is and it doesn't really matter.
 tolerance = 1e-4;
 
-assert(abs(E(:) - gamma(:)) < tolerance);
+assert(max(abs(E(:) - gamma(:))) < tolerance);
 
 fprintf('Outputs match those of the reference fwd_back.m\n');
 
@@ -34,7 +34,7 @@ obslik = 50*rand(K,T);
 [logSmoothedSequence, logTwoSliceMarginals] = fwd_back_MatlabC(log(init_state_distrib+eps), log(obslik+eps), log(transmat+eps));
 E = normalize(exp(logSmoothedSequence),1);
 
-assert( abs( E(:,4) - [1;0;0]) < tolerance );
-assert( abs( E(:,5) - [0;1;0]) < tolerance );
+assert( max(abs( E(:,5) - [1;0;0])) < tolerance );
+assert( max(abs( E(:,6) - [0;1;0])) < tolerance );
 
 fprintf('\tTest passed.\n');

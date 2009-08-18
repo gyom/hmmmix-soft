@@ -33,7 +33,7 @@ unit_test_normalize
 unit_test_viterbi_path
 unit_test_fwd_back_MatlabC
 unit_test_hmmmix_frugal_hM_KTg_MatlabC
-
+cd ..
 
 
 % Inside the 'reference' directory, you can run this function to make sure that both

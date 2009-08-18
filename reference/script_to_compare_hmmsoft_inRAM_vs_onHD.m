@@ -40,6 +40,7 @@ reportSt_inRAM = runHmmmixSoft_inRAM(dataSt, initValuesSt, algorithmParamsSt);
 
 % use dataSt.Y_PT instead of passing the data by files
 algorithmsParamsSt.scratchPath = '/tmp';
+fprintf('Using the directory %s as scratch space to perform hmmmix-soft on the hard drive.\nYou might want to delete all the generated .mat files afterwards.\nIf you run hmmmix-soft on the hard drive using the same scratch directory all the time,\nthese files will be overwritten and nothing will accumulate.\n', scratchPath);
 reportSt_onHD = runHmmmixSoft_onHD(dataSt, initValuesSt, algorithmParamsSt);
 
 % Now let's make sure that both versions returned the same thing. This is

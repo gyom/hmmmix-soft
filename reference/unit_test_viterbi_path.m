@@ -23,14 +23,14 @@ path3 = viterbi_path_MatlabC(log(prior+eps), log(transmat+eps), log(obslik+eps))
 % whatever you think is fine
 tolerance = 1e-8;
 
-assert( abs(path(:) - path2(:)) < tolerance );
-assert( abs(loglik(:) - loglik2(:)) < tolerance );
-assert( abs(seg(:,1:3) - seg2(:,1:3)) < tolerance );
+assert( max(abs(path(:) - path2(:))) < tolerance );
+assert( max(abs(loglik(:) - loglik2(:))) < tolerance );
+assert( max(max(abs(seg(:,1:3) - seg2(:,1:3)))) < tolerance );
 
-assert( abs(path(:) - path3(:)) < tolerance );
+assert( max(abs(path(:) - path3(:))) < tolerance );
 
-assert( abs(path(:) - path4(:)) < tolerance );
-assert( abs(loglik(:) - loglik4(:)) < tolerance );
-assert( abs(seg(:,1:3) - seg4(:,1:3)) < tolerance );
+assert( max(abs(path(:) - path4(:))) < tolerance );
+assert( max(abs(loglik(:) - loglik4(:))) < tolerance );
+assert( max(max(abs(seg(:,1:3) - seg4(:,1:3)))) < tolerance );
 
 fprintf('\tUnit test for viterbi_path_MatlabC passed.\n');

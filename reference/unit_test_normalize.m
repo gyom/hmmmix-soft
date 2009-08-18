@@ -13,6 +13,6 @@ for i=1:10
 end
 
 E = normalize(A);
-assert(sum(E(:)) == 1);
+assert(abs(sum(E(:)) - 1) < 1e-8);
 
 fprintf('\tnormalize.m behaves as expected.\n');

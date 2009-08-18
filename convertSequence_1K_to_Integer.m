@@ -13,7 +13,7 @@ function A = convertSequence_1K_to_Integer(E)
     A = zeros(1,T);
 
     % make sure there is only one value of 1 per column
-    assert(sum(E) == 1);
+    assert(max(abs(sum(E) - 1)) < 1e-8);
     
     for t=1:T
         A(t) = find(E(:,t));

@@ -23,7 +23,7 @@ F = exp(logTwoSliceMarginals);
 for t=1:T-1
     F(:,:,t) = normalize(F(:,:,t));
 end
-assert( abs(E - hM_KTg)  <  tolerance);
-assert( abs(F - xi_KKBg)  <  tolerance);
+assert( max(abs(E(:) - hM_KTg(:)))  <  tolerance);
+assert( max(abs(F(:) - xi_KKBg(:)))  <  tolerance);
 
 fprintf('\tTest passed.\n');

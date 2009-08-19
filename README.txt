@@ -1,8 +1,34 @@
-% Summer 2009. Guillaume Alain, gyomalin@gmail.com
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                       %
+% UBC 2007-2009. Guillaume Alain, gyomalin@gmail.com    %
+%                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1. Some notes
+% 2. Installation procedure.
+% 3. Permission to use the code.
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%% 1. Some notes  %%%
+%%%%%%%%%%%%%%%%%%%%%%
+
+% This code contains the essential pieces of the hmmmix-soft algorithm described in my
+% thesis at UBC, entitled "Model-based clustering for aCGH data using variational EM".
+% All the scripts to orchestrate the experiences that I carried are not found here, but
+% there is one file called "script_to_compare_hmmsoft_inRAM_vs_onHD.m" that should serve
+% as a basis for using this code.
+%
+% The hmmmix-soft algorithm is my version of the hmmmix algorithm from Sohrab Shah. Refer
+% to Sohrab Shah's PhD thesis if needed.
+%
+% This code is provided more or less "as is", but I did try to do a good job at packaging
+% it so I could be built from scratch and used easily. My apologies to anyone finding the
+% documentation insufficient.
 
 
-%%% Installation procedure. %%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 2. Installation procedure  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % For the sake of the discussion, let's assume that you want to install the
 % code for hmmmix-soft code into the directory
@@ -12,7 +38,6 @@
 % I don't personally recommend adding anything other than the main directory into the
 % Matlab path. That is, don't add it recursively because you will catch the 'optional_kmedoids_wrapper'
 % directory that overshadows some of Sohrab Shah's functions from his CNAhmmer package.
-
 
 
 cd /home/gyom/.matlab/work/hmmsoft
@@ -48,7 +73,29 @@ script_to_compare_hmmsoft_inRAM_vs_onHD
 % Sohrab's k-medoids code. If you want to do so, you need to add the 'optional_kmedoids_wrapper'
 % directory to the path. I don't really like recommending using this because I'm polluting the
 % namespace by overshadowing some of Sohrab's functions, but in some cases it might be what you
-% want to do. If you're using Sohrab's CNAmmer code too, you can always add the
+% want to do. If you're using Sohrab's CNA-HMMer code too, you can always add the
 % 'optional_kmedoids_wrapper' directory only when you need it without saving the updated Matlab path.
+% I'm personally using a more recent version of the code available on his web site. The code that I
+% use dates from around January 2009 and the directory is named "CNA-HMMer-spec". It naturally has to
+% be in the Matlab path too. I just added everything recursively, but it's important that the 
+% functions from my 'optional_kmedoids_wrapper' are found BEFORE those of CNA-HMMer-spec that they
+% are intended to overshadow.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 3. Permission to use the code  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% I don't think there is much money to be made with this code, but I'd still like to get credit
+% for what I did. So, there you have it. That makes it more of a BSD license than a GPL license.
+% I would be really happy if my work was actually used by others.
+
+% I wrote everything in the root directory except mexutils.c, mexutils.h, repmatC.c and normalize.m.
+% Some functions in the 'reference' directory come from Kevin Murphy and Sohrab Shah. Most of what is
+% in the 'option_kmedoids_wrapper' comes from Sohrab Shah more or less directly.
+
+
+
+
 
  

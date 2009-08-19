@@ -1,5 +1,4 @@
 function kmedoidsSt = kmedoids_inRAM_wrapper_to_Sohrab_code(dataSt, initValuesSt)
-    
     % This function is some sort of hack to use Sohrab's code to perform
     % the k-medoids initialization. One of the problems that I had was that
     % I wanted to override some of the hyperparameters and that meant that
@@ -28,7 +27,7 @@ function kmedoidsSt = kmedoids_inRAM_wrapper_to_Sohrab_code(dataSt, initValuesSt
     % before those coded by Sohrab Shah.
 
     [K,P] = size(initValuesSt.nu_KP);
-    T = size(dataSt.Y_PT,2);
+    %T = size(dataSt.Y_PT,2);
     
     if ~hasField(dataSt, 'G')
         numG = size(initValuesSt.hC_GP,1);
@@ -80,18 +79,23 @@ function kmedoidsSt = kmedoids_inRAM_wrapper_to_Sohrab_code(dataSt, initValuesSt
         M_init = initialiseMWithEntropy(Z,G_init,K,Ethresh);
         [numP,N] = size(Z);
         
-    kmedoids.mu_KP = mus';
-    kmedoids.lambda_KP = lambdas';
-    kmedoids.eta_KP = eta';
-    kmedoids.m_KP = m';
-    kmedoids.gamma_KP = gamma';
-    kmedoids.S_KP = S';
+    kmedoidsSt.mu_KP = mus';
+    kmedoidsSt.lambda_KP = lambdas';
+    kmedoidsSt.eta_KP = eta';
+    kmedoidsSt.m_KP = m';
+    kmedoidsSt.gamma_KP = gamma';
+    kmedoidsSt.S_KP = S';
     
-    kmedoids.M_init = M_init;
+    kmedoidsSt.M_init = M_init;
     % M_init(g,t) = the value of {1,...,K} imputed initially for patient p
     %               at time step t
-    kmedoids.G_init = G_init';
+    kmedoidsSt.G_init = G_init';
     % G_init(p) = the group g in {1,...,G} to which we initially assign
     %               patient p
+    
+    kmedoidsSt.hC_GP = zeros(numG,P);
+    for p=1:P
+        kmedoidsSt.hC_GP(G_init(p), p) = 1;
+    end
     
 end

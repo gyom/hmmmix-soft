@@ -11,7 +11,7 @@ function reportSt = runHmmmixSoft_onHD(dataSt, initValuesSt, algorithmParamsSt)
     % 
     % Instead of specifying the values of Y_PT, we can use the values from
     %   dataSt.Y_PT_cachedFilenames{p}
-    % that should contain strings such as "Y_001.mat". These files should
+    % that should contain strings such as "/home/.../tmp/Y_001.mat". These files should
     % be files that contain variables 'Y_pT' to be loaded with the command
     %   load(sprintf('%s/%s',   algorithmsParamsSt.scratchPath, ...
     %                           dataSt.Y_PT_cachedFilenames{p}))
@@ -21,6 +21,27 @@ function reportSt = runHmmmixSoft_onHD(dataSt, initValuesSt, algorithmParamsSt)
     % sequence of values 1:T can fit in memory, though. With T=1,000,000
     % and P=100 this is the case, for example.
     % 
+    % The arguments and the returned values are basically the same as those
+    % of runHmmmixSoft_inRAM, but since we cannot put more than one copy of
+    % anything of length T in memory, we have to return the usual outputs
+    %   reportSt.hM_KTG
+    %   reportSt.viterbiPathsForAllGroups
+    %   reportSt.hM_KTG_convertedToHard
+    % by means of .mat files. This function dumps the contents of the
+    % variables inside certain files and returns the filenames of those
+    % files by the following fields :
+    %   reportSt.hM_KTG_cachedFilenames
+    %   reportSt.viterbiPaths_GT_cachedFilenames
+    %   reportSt.hM_KTG_convertedToHard_cachedFilenames
+    % These are cell arrays of dimension G. For example, to get the chain
+    % of hard values assigned to group g=3, you would use :
+    %   load(reportSt.viterbiPaths_GT_cachedFilenames{3}, 'viterbiPaths_gT');
+    % and then look at the variable called 'viterbiPaths_gT' in the
+    % environment. In the other cases, you would do either
+    %   load(reportSt.hM_KTG_cachedFilenames{3}, 'hM_KTg');
+    %   load(reportSt.hM_KTG_convertedToHard_cachedFilenames{3}, 'hM_KTg');
+    % and look at the variable 'hM_KTg' loaded.
+    %
     %
     % The parameters consist of three
     % structures with certain fields explained below. Some default values
@@ -92,13 +113,17 @@ function reportSt = runHmmmixSoft_onHD(dataSt, initValuesSt, algorithmParamsSt)
     %
     %
     % Main output fields for hmmmix-soft :
-    %   reportSt.hM_KTG
-    %   reportSt.hC_GP
-    %   reportSt.mu_KP
-    %   reportSt.lambda_KP
-    %   reportSt.transitionMatrices
+    %   reportSt.hM_KTG_cachedFilenames   
+    %       (soft assignments for the hidden chains, see note somewhere above)
+    %   reportSt.hC_GP    (soft assignments for the patients)
+    %   reportSt.mu_KP      (means, see thesis)
+    %   reportSt.lambda_KP  (precisions, see thesis)
+    %   reportSt.transitionMatrices   
+    %       (transition matrices for hidden chains)
     %   reportSt.initStates
+    %       (initial states for hidden chains)
     %   reportSt.loglikelihood_theta
+    %       (log-likelihood value for the learned parameters)
     %
     % Output fields for monitoring (mostly for debugging) :
     %   reportSt.time
@@ -109,13 +134,26 @@ function reportSt = runHmmmixSoft_onHD(dataSt, initValuesSt, algorithmParamsSt)
     % (computed only if algorithmParamsSt.include_final_hard_assignment=true) :
     %    reportSt.loglikelihood_chains
     %    reportSt.loglikelihood_individual_chains
-    %    reportSt.viterbiPathsForAllGroups
+    %       (log-likelihood values for the sequences of hidden states)
+    %    reportSt.viterbiPaths_GT_cachedFilenames
+    %       (imputed values for the hidden chains, size [G,T], taking
+    %        values from 1:K, see note above on "cachedFilenames")
     %    reportSt.hC_GP_convertedToHard
-    %    reportSt.hM_KTG_convertedToHard
-    %    reportSt.M
+    %       (hard patient assignments, encoded as 1-of-G binary values)
+    %    reportSt.hM_KTG_convertedToHard_cachedFilenames
+    %       (essentially the same as viterbiPathsForAllGroups, but encoded
+    %        as 1-of-G binary values. Same format as hM_KTG. See note above on "cachedFilenames")
     %    reportSt.patientsAssignmentIndices
+    %       (same as hC_GP_convertedToHard, but we have the indices of the
+    %        groups to which the patients are assigned instead of having the
+    %        values be in a matrix)
     %    reportSt.loglikelihood_for_hard_projection
     %    reportSt.loglikelihood_for_hard_projection_individual_patients
+    %       (log-likelihoods for the sequences of values Y_PT given our
+    %        choice of hard assignments to the hidden chains)
+    % All the fields about the "hard assignments" refer to the methods
+    % described in my thesis where I get hard assignments from the final
+    % soft assignments of hmmmix-soft.
         
     % To be completely honest, I think there could be a way to add some
     % kind of regularization to the initial priors for the hidden chains.

@@ -70,13 +70,16 @@ function reportSt = runHmmmixSoft_inRAM(dataSt, initValuesSt, algorithmParamsSt)
     %
     %
     % Main output fields for hmmmix-soft :
-    %   reportSt.hM_KTG
-    %   reportSt.hC_GP
-    %   reportSt.mu_KP
-    %   reportSt.lambda_KP
-    %   reportSt.transitionMatrices
+    %   reportSt.hM_KTG   (soft assignments for the hidden chains)
+    %   reportSt.hC_GP    (soft assignments for the patients)
+    %   reportSt.mu_KP      (means, see thesis)
+    %   reportSt.lambda_KP  (precisions, see thesis)
+    %   reportSt.transitionMatrices   
+    %       (transition matrices for hidden chains)
     %   reportSt.initStates
+    %       (initial states for hidden chains)
     %   reportSt.loglikelihood_theta
+    %       (log-likelihood value for the learned parameters)
     %
     % Output fields for monitoring (mostly for debugging) :
     %   reportSt.time
@@ -87,13 +90,26 @@ function reportSt = runHmmmixSoft_inRAM(dataSt, initValuesSt, algorithmParamsSt)
     % (computed only if algorithmParamsSt.include_final_hard_assignment=true) :
     %    reportSt.loglikelihood_chains
     %    reportSt.loglikelihood_individual_chains
+    %       (log-likelihood values for the sequences of hidden states)
     %    reportSt.viterbiPathsForAllGroups
+    %       (imputed values for the hidden chains, size [G,T], taking
+    %        values from 1:K)
     %    reportSt.hC_GP_convertedToHard
+    %       (hard patient assignments, encoded as 1-of-G binary values)
     %    reportSt.hM_KTG_convertedToHard
-    %    reportSt.M
+    %       (essentially the same as viterbiPathsForAllGroups, but encoded
+    %        as 1-of-G binary values. Same format as hM_KTG.)
     %    reportSt.patientsAssignmentIndices
+    %       (same as hC_GP_convertedToHard, but we have the indices of the
+    %        groups to which the patients are assigned instead of having the
+    %        values be in a matrix)
     %    reportSt.loglikelihood_for_hard_projection
     %    reportSt.loglikelihood_for_hard_projection_individual_patients
+    %       (log-likelihoods for the sequences of values Y_PT given our
+    %        choice of hard assignments to the hidden chains)
+    % All the fields about the "hard assignments" refer to the methods
+    % described in my thesis where I get hard assignments from the final
+    % soft assignments of hmmmix-soft.
         
     % To be completely honest, I think there could be a way to add some
     % kind of regularization to the initial priors for the hidden chains.

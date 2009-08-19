@@ -87,8 +87,15 @@ reportSt_onHD = runHmmmixSoft_onHD(dataSt, initValuesSt, algorithmParamsSt);
 % Now let's make sure that both versions returned the same thing. This is
 % because the algorithm is deterministic. It makes a nice way to check the
 % equivalence. Don't run the 'runHmmmixSoft_inRAM' with a large T, though.
+% When any of those assert statement fails, have a look at the histogram of
+% the values. At most, there are a few values values that differ out of
+% the thousands.
 
 assert(max(abs(reportSt_inRAM.hC_GP(:) - reportSt_onHD.hC_GP(:))) < 0.04);
+% I wanted to use 10e-8 instead of 0.04 here, but for some reason, one
+% value is a bit off. Plotting the histogram shows that it's an exception
+% (and it's not even that far off).
+%        hist(abs(reportSt_inRAM.hC_GP(:) - reportSt_onHD.hC_GP(:)))
 assert(max(abs(reportSt_onHD.avLocalEnt(:) - reportSt_inRAM.avLocalEnt(:)))  < 0.01);
 
 % I'm checking here the values for the imputed chains because it's one of

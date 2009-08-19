@@ -40,8 +40,6 @@ mex viterbi_path_MatlabC.c
 mex -c hmmmix_compute_rho_KTP_nopdf_MatlabC.c
 mex hmmmix_compute_rho_KTP_nopdf_MatlabC.o hmmmix_common.o
 
-fprintf('Now we''re compiling functions that are not really necessary unless we want to use the code for kmedoids.\n')
-
 % The function repmatC is used by the 'normalize' function, which comes
 % from Kevin Murphy's BNT toolkit. repmatC itself comes from Tom Minka's
 % lightspeed toolkit, but I never really benchmarked the thing myself.
@@ -49,11 +47,16 @@ mex -c mexutil.c
 mex -c repmatC.c
 mex repmatC.o mexutil.o
 
+
+fprintf('Now we''re compiling functions that are not really necessary unless we want to use the code for kmedoids.\n')
+
+
 % Functions used for the kmedoids hack with Sohrab Shah's code. These are
 % used to speed up the functions that couldn't be vectorized. Since I've
 % used many versions of the fwd_back.c code, I had to include here the
 % "old" version that behaved exactly like Sohrab's matlab version of the
 % 'fwd_back' function. Same for viterbi_path_SSC.
+cd optional_kmedoids_wrapper
 mex fwd_back.c
 mex viterbi_path_SSC.c
 cd ..

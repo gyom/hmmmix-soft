@@ -23,7 +23,11 @@
 %
 % This code is provided more or less "as is", but I did try to do a good job at packaging
 % it so I could be built from scratch and used easily. My apologies to anyone finding the
-% documentation insufficient.
+% documentation insufficient. The final steps in the production of this "package" for
+% distribution to the general public were done after I was finished with my experiments
+% for my thesis. This means that, although I have tested my code, performed unit tests and
+% such, I've never really used the final package myself. This limits how confident I can be
+% when I say that it's working fine.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -6,7 +6,8 @@
 
 % 1. Some notes
 % 2. Installation procedure.
-% 3. Permission to use the code.
+% 3. About k-medoids
+% 4. Permission to use the code.
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%% 1. Some notes  %%%
@@ -34,6 +35,13 @@
 %%% 2. Installation procedure  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% This procedure was tested on Mac OSX 10.5.8 with Matlab R2008b
+% and on Linux (Open Suse 10.3) with Matlab R2007b.
+% To install this on Windows you need a C compiler because a lot of functions
+% were written in C when vectorization was impossible. There is nothing
+% fundamentally related to Linux/Unix in the code that would cause problems,
+% but the compilation method might differ slightly depending on your compiler.
+%
 % For the sake of the discussion, let's assume that you want to install the
 % code for hmmmix-soft code into the directory
 % /home/gyom/.matlab/work/hmmsoft
@@ -75,21 +83,30 @@ unit_test_hmmmix_frugal_hM_KTg_MatlabC
 script_to_compare_hmmsoft_inRAM_vs_onHD
 cd ..
 
-% The only potential problem now is if you want to use my function that calls
-% Sohrab's k-medoids code. If you want to do so, you need to add the 'optional_kmedoids_wrapper'
-% directory to the path. I don't really like recommending using this because I'm polluting the
-% namespace by overshadowing some of Sohrab's functions, but in some cases it might be what you
-% want to do. If you're using Sohrab's CNA-HMMer code too, you can always add the
-% 'optional_kmedoids_wrapper' directory only when you need it without saving the updated Matlab path.
-% I'm personally using a more recent version of the code available on his web site. The code that I
-% use dates from around January 2009 and the directory is named "CNA-HMMer-spec". It naturally has to
-% be in the Matlab path too. I just added everything recursively, but it's important that the 
-% functions from my 'optional_kmedoids_wrapper' are found BEFORE those of CNA-HMMer-spec that they
-% are intended to overshadow.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 3. About k-medoids  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% There is a function called 'kmedoids_inRAM_wrapper_to_Sohrab_code' that uses
+% Sohrab Shah's k-medoids code to initialize the patients assignments. To use it, you
+% need to have his CNA-HMMer code on your Matlab path. On top of that, you need to add the 
+% 'hmmmix_soft/optional_kmedoids_wrapper' directory to your path when using the function
+% 'kmedoids_inRAM_wrapper_to_Sohrab_code'. It was necessary for me to overshadow some of Sohrab's
+% original functions to get the functionality that I wanted, but this is not something that you
+% want to do permanently if you are using his CNA-HMMer code regularly.
+%
+% I'm personally using a more recent version of the code available on his web site. The code that I
+% use dates from around January 2009 and the directory is named "CNA-HMMer-spec". I just added 
+% all the directory from his code recursively and it works for me, but the important thing is that
+% the functions from my 'optional_kmedoids_wrapper' are found BEFORE those of CNA-HMMer-spec that they
+% are intended to overshadow.
+%
+% You can test the k-medoids functions by uncommenting lines 67-68 in
+% 'script_to_compare_hmmsoft_inRAM_vs_onHD'. This should indicate how the 
+% 'kmedoids_inRAM_wrapper_to_Sohrab_code' function is meant to be used.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% 3. Permission to use the code  %%%
+%%% 4. Permission to use the code  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % I don't think there is much money to be made with this code, but I'd still like to get credit
@@ -100,7 +117,11 @@ cd ..
 % Some functions in the 'reference' directory come from Kevin Murphy and Sohrab Shah. Most of what is
 % in the 'option_kmedoids_wrapper' comes from Sohrab Shah more or less directly.
 
-
+% Finally, I should say that, at the time I release this code, I don't plan to work on it anymore.
+% It was a nice thing to be able to work on this problem for my thesis, but it's not really my "field"
+% and I won't be the one maintaining this code if it's actually used for serious research. In fact,
+% if you start finding bugs that you can fix and if you want to integrate this code into your own,
+% you are free to do so. It'd be nice to send me an email if you do that, though.
 
 
 

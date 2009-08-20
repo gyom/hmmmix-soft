@@ -35,7 +35,7 @@ dataSt = hmmmix_generateData_frugal(trueG, P, T, K);
 % the next 51 time steps for the second chromosome, this would look like
 % dataSt.chromosomeIndices = [repmat(1, [1,127]), repmat(2, [1,51])];
 dataSt.chromosomeIndices = ones(1,T);
-dataSt.chromosomeIndices = [repmat(1, [1,T/2]), repmat(2, [1,T/2])];
+% dataSt.chromosomeIndices = [repmat(1, [1,T/2]), repmat(2, [1,T/2])];
 
 % refer to thesis for the meaning of the quantities
 dataSt.m_KP = repmat(dataSt.m_K, [1,P]);

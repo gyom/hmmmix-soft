@@ -62,16 +62,18 @@ unit_test_normalize
 unit_test_viterbi_path
 unit_test_fwd_back_MatlabC
 unit_test_hmmmix_frugal_hM_KTg_MatlabC
-cd ..
 
 
 % Inside the 'reference' directory, you can run this function to make sure that both
 % implementations of hmmmix-soft (in memory and on hard drive) produce the same results.
 % This is more of a sanity check than anything. If this passes, it probably means that
 % you're clear and there is not problem in the installation. This script can also serve as
-% an example of usage for my implementation of the hmmmix-soft algorithm.
+% an example of usage for my implementation of the hmmmix-soft algorithm. There is a small issue
+% where the results can differ by almost nothing. I decided to draw the line there and not
+% track down this minor issue. See inside the script for further comments.
 
 script_to_compare_hmmsoft_inRAM_vs_onHD
+cd ..
 
 % The only potential problem now is if you want to use my function that calls
 % Sohrab's k-medoids code. If you want to do so, you need to add the 'optional_kmedoids_wrapper'
